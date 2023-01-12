@@ -95,4 +95,5 @@
         group: hashdot
         recurse: true
 
-    
+    - name: Install nvm    
+      shell: yay -S --noconfirm nvm
