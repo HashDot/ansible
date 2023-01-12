@@ -1,0 +1,98 @@
+- name: Common Configuration
+  hosts: home
+  tasks:
+    - name: Install Alacritty
+      community.general.pacman:
+        name: alacritty
+        state: present
+    - name: Install Polybar
+      community.general.pacman:
+        name: polybar
+        state: present
+    - name: Install fish shell
+      community.general.pacman:
+        name: fish
+        state: present
+    - name: Set default shell to fish
+      ansible.builtin.command: usermod --shell /bin/fish hashdot
+      become: true
+      changed_when: false
+    - name: Install Starship for fish shell
+      community.general.pacman:
+        name: starship
+        state: present
+    - name: Install The Fuck
+      community.general.pacman:
+        name: thefuck
+        state: present
+    - name: Install Obsidian
+      community.general.pacman:
+        name: obsidian
+        state: present
+    - name: Install Thunderbird
+      community.general.pacman:
+        name: thunderbird
+        state: present
+
+    # install chat apps
+    - name: Install Mattermost
+      community.general.pacman:
+        name: mattermost-desktop
+        state: present
+    - name: Install Signal
+      community.general.pacman:
+        name: signal-desktop
+        state: present
+
+    - name: Install Bitwarden
+      community.general.pacman:
+        name: bitwarden
+        state: present
+
+    # Install Syncthing
+    - name: Install Syncthing
+      community.general.pacman:
+        name: syncthing
+        state: present
+    - name: Copy systemd syncthing file
+      copy:
+        src: templates/syncthing.service
+        dest: /home/hashdot/.config/systemd/user
+        owner: hashdot
+        group: hashdot
+    - name: Start and enable syncthing
+      ansible.builtin.systemd:
+        name: syncthing
+        state: started
+        scope: user
+
+    # Install Git Utils
+    - name: Install ghq
+      shell: yay -S --noconfirm ghq-bin
+    - name: Install gitui
+      community.general.pacman:
+        name: gitui
+        state: present
+
+    # Install Neovim
+    - name: Install Neovim
+      community.general.pacman:
+        name: neovim
+        state: present
+    - name: Remove Packer
+      ansible.builtin.file:
+        path: /home/hashdot/.local/share/nvim/site/pack/packer/start/packer.nvim
+        state: absent
+    - name: Install Neovim Package Manager (Packer)
+      ansible.builtin.git:
+        repo: https://github.com/wbthomason/packer.nvim.git
+        dest: /home/hashdot/.local/share/nvim/site/pack/packer/start/packer.nvim
+        depth: 1
+    - name: Set ownership of packer
+      ansible.builtin.file:
+        path: /home/hashdot/.local/share/nvim/site/pack/packer/start/packer.nvim
+        owner: hashdot
+        group: hashdot
+        recurse: true
+
+    

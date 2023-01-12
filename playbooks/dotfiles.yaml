@@ -1,0 +1,64 @@
+- name: Dotfiles
+  hosts: home
+  tasks:
+    - name: Get .config folder from GIT
+      ansible.builtin.git:
+        repo: 'https://github.com/hashdot/dotfiles.git'
+        dest: /home/hashdot/temp-config
+    - name: Change temp-config ownership
+      ansible.builtin.file:
+        path: /home/hashdot/temp-config
+        owner: hashdot
+        group: hashdot
+        recurse: true
+    
+          # fish configuration
+    - name: Remove old .config/fish folder
+      ansible.builtin.file:
+        path: /home/hashdot/.config/fish
+        state: absent
+    - name: Copy fish config
+      shell: cp -R /home/hashdot/temp-config/fish /home/hashdot/.config
+    
+        # i3 configuration
+    - name: Remove old .config/i3 folder
+      ansible.builtin.file:
+        path: /home/hashdot/.config/i3
+        state: absent
+    - name: Copy i3 config
+      shell: cp -R /home/hashdot/temp-config/i3 /home/hashdot/.config
+    
+        # nvim config
+    - name: Remove old .config/nvim folder
+      ansible.builtin.file:
+        path: /home/hashdot/.config/nvim
+        state: absent
+    - name: Copy nvim config
+      shell: cp -R /home/hashdot/temp-config/nvim /home/hashdot/.config
+    
+        # polybar config
+    - name: Remove old .config/polybar folder
+      ansible.builtin.file:
+        path: /home/hashdot/.config/polybar
+        state: absent
+    - name: Copy polybar config
+      shell: cp -R /home/hashdot/temp-config/polybar /home/hashdot/.config
+    
+        # rofi config
+    - name: Remove old .config/rofi folder
+      ansible.builtin.file:
+        path: /home/hashdot/.config/rofi
+        state: absent
+    - name: Copy rofi config
+      shell: cp -R /home/hashdot/temp-config/rofi /home/hashdot/.config
+    
+    - name: Set .config ownership
+      ansible.builtin.file:
+        path: /home/hashdot/.config
+        owner: hashdot
+        group: hashdot
+        recurse: true
+    
+    - name: Remove temp-config folder
+      shell: rm -rf /home/hashdot/temp-config
+      become: true
