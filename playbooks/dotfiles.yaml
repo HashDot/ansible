@@ -12,7 +12,7 @@
         group: hashdot
         recurse: true
     
-          # fish configuration
+    # fish configuration
     - name: Remove old .config/fish folder
       ansible.builtin.file:
         path: /home/hashdot/.config/fish
@@ -20,7 +20,7 @@
     - name: Copy fish config
       shell: cp -R /home/hashdot/temp-config/fish /home/hashdot/.config
     
-        # i3 configuration
+    # i3 configuration
     - name: Remove old .config/i3 folder
       ansible.builtin.file:
         path: /home/hashdot/.config/i3
@@ -28,7 +28,7 @@
     - name: Copy i3 config
       shell: cp -R /home/hashdot/temp-config/i3 /home/hashdot/.config
     
-        # nvim config
+    # nvim config
     - name: Remove old .config/nvim folder
       ansible.builtin.file:
         path: /home/hashdot/.config/nvim
@@ -36,7 +36,7 @@
     - name: Copy nvim config
       shell: cp -R /home/hashdot/temp-config/nvim /home/hashdot/.config
     
-        # polybar config
+    # polybar config
     - name: Remove old .config/polybar folder
       ansible.builtin.file:
         path: /home/hashdot/.config/polybar
@@ -44,13 +44,21 @@
     - name: Copy polybar config
       shell: cp -R /home/hashdot/temp-config/polybar /home/hashdot/.config
     
-        # rofi config
+    # rofi config
     - name: Remove old .config/rofi folder
       ansible.builtin.file:
         path: /home/hashdot/.config/rofi
         state: absent
     - name: Copy rofi config
       shell: cp -R /home/hashdot/temp-config/rofi /home/hashdot/.config
+
+    # alacritty config
+    - name: Remove old .config/alacritty folder
+      ansible.builtin.file:
+        path: /home/hashdot/.config/alacritty
+        state: absent
+    - name: Copy alacritty config
+      shell: cp -R /home/hashdot/temp-config/alacritty /home/hashdot/.config
     
     - name: Set .config ownership
       ansible.builtin.file:
