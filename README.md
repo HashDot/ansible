@@ -6,4 +6,6 @@
 
 ### Apply dotfiles
 
+Source: https://github.com/hashdot/dotfiles
+
 `ansible-playbok -i inventory.yaml playbooks/dotfiles.yaml`
