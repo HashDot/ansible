@@ -1,13 +1,19 @@
 - name: Common Configuration
   hosts: home
   tasks:
+
+    # Install terminal tools
     - name: Install Alacritty
       community.general.pacman:
         name: alacritty
         state: present
-    - name: Install Polybar
+    - name: Install tmux
       community.general.pacman:
-        name: polybar
+        name: tmux
+        state: present
+    - name: Install btop
+      community.general.pacman:
+        name: btop
         state: present
     - name: Install fish shell
       community.general.pacman:
@@ -25,6 +31,17 @@
       community.general.pacman:
         name: thefuck
         state: present
+    - name: Install k9s
+      community.general.pacman:
+        name: k9s
+        state: present
+    # Install ui stuff
+    - name: Install Polybar
+      community.general.pacman:
+        name: polybar
+        state: present
+
+    # Install general apps
     - name: Install Obsidian
       community.general.pacman:
         name: obsidian
