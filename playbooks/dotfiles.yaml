@@ -70,3 +70,26 @@
     - name: Remove temp-config folder
       shell: rm -rf /home/hashdot/temp-config
       become: true
+
+    # Get custom fonts
+    - name: Clone custom fonts
+      ansible.builtin.git:
+        repo: 'git@github.com:HashDot/fonts.git'
+        dest: /home/hashdot/temp-fonts
+        accept_hostkey: yes
+        key_file: /home/hashdot/.ssh/id_ecdsa
+    - name: Change temp-fonts ownership
+      ansible.builtin.file:
+        path: /home/hashdot/temp-fonts
+        owner: hashdot
+        group: hashdot
+        recurse: true
+    - name: Remove old fonts
+      ansible.builtin.file:
+        path: /home/hashdot/.local/share/fonts
+        state: absent
+    - name: Copy new fonts
+      shell: cp -R /home/hashdot/temp-fonts /home/hashdot/.local/share/fonts
+    - name: Remove temo-fonts folder
+      shell: rm -rf /home/hashdot/temp-fonts
+      become: true
