@@ -50,6 +50,26 @@
       community.general.pacman:
         name: thunderbird
         state: present
+    - name: Install Insomnia
+      shell: yay -S --noconfirm insomnia-bin
+    - name: Install DB Gate
+      shell: yay -S --noconfirm dbgate-bin
+    - name: Install Flameshot
+      community.general.pacman:
+        name: flameshot
+        state: present
+    - name: Install Notion
+      shell: yay -S --noconfirm notion-app
+    - name: Install Filezilla
+      community.general.pacman:
+        name: filezilla
+        state: present
+    - name: Install Libre Office
+      community.general.pacman:
+        name: libreoffice-fresh
+        state: present
+    - name: Install Google Chrome
+      shell: yay -S --noconfirm google-chrome
 
     # install chat apps
     - name: Install Mattermost
@@ -59,6 +79,10 @@
     - name: Install Signal
       community.general.pacman:
         name: signal-desktop
+        state: present
+    - name: Install Discord
+      community.general.pacman:
+        name: discord
         state: present
 
     - name: Install Bitwarden
