@@ -8,3 +8,10 @@ home:
       ansible_host: 10.0.0.6
       ansible_connection: ssh
       ansible_user: root
+
+pve:
+  hosts:
+    tv:
+      ansible_host: 10.0.0.158
+      ansible_connection: ssh
+      ansible_user: lars
