@@ -1,0 +1,70 @@
+version: "3.3"
+
+services:
+  jellyfin:
+    image: docker.io/jellyfin/jellyfin:latest
+    container_name: jellyfin
+    user: 1000:1000
+    volumes:
+      - /home/lars/jellyfin/config:/config
+      - /home/lars/jellyfin/cache:/cache
+      - /home/lars/data/media/tv:/tv
+      - /home/lars/data/media/movies:/movies
+      - /dev/dri:/dev/dri
+    restart: 'unless-stopped'
+    ports:
+      - "8096:8096"
+
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
+    environment:
+      - TZ=Europe/Berlin
+    ports:
+      - 5055:5055
+    volumes:
+      - /home/lars/jellyseerr:/app/config
+    restart: unless-stopped
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=Europe/Berlin
+    volumes:
+      - /home/lars/radarr:/config
+      - /home/lars/data:/data #optional
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+    volumes:
+      - /home/lars/sonarr:/config
+      - /home/lars/data:/data #optional
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+
+
+  sabnzbd:
+    image: lscr.io/linuxserver/sabnzbd:latest
+    container_name: sabnzbd
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+    volumes:
+      - /home/lars/sabnzbd/config:/config
+      - /home/lars/data/usenet:/data/usenet #optional
+    ports:
+      - 8080:8080
+    restart: unless-stopped

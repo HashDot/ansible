@@ -15,3 +15,20 @@ pve:
       ansible_host: 10.0.0.158
       ansible_connection: ssh
       ansible_user: lars
+    monitoring:
+      ansible_host: 10.0.0.136
+      ansible_connection: ssh
+      ansible_user: lars
+    gitops:
+      ansible_host: 10.0.0.145
+      ansible_connection: ssh
+      ansible_user: lars
+    gaming:
+      ansible_host: 10.0.0.126
+      ansible_connection: ssh
+      ansible_user: lars
+
+k3s-cp:
+  hosts:
+    k3s-cp-01:
+      ansible_host: 10.0.0.20

@@ -1,0 +1,36 @@
+### Ubuntu Servers
+- name: TV Server Configuration
+  hosts: pve
+  become: true
+  tasks:
+    - name: Create .credentials file
+      copy:
+        dest: "/home/lars/.credentials"
+        content: |
+          username=
+          password=
+    - name: Create tv mount point
+      ansible.builtin.file:
+        path: /mnt/tv
+        state: directory
+        mode: '0755'
+    - name: Create movies mount point
+      ansible.builtin.file:
+        path: /mnt/movies
+        state: directory
+        mode: '0755'
+
+    - name: Mount the TV share
+      ansible.posix.mount:
+        src: //10.0.0.60/tv
+        path: /home/lars/data/media/tv
+        opts: "rw,_netdev,noserverino,credentials=/home/lars/.credentials,uid=1000,gid=1000,dir_mode=0755,file_mode=0755"
+        fstype: cifs
+        state: mounted
+    - name: Mount the Movie share
+      ansible.posix.mount:
+        src: //10.0.0.60/movies
+        path: /home/lars/data/media/movies
+        opts: "rw,_netdev,noserverino,credentials=/home/lars/.credentials,uid=1000,gid=1000,dir_mode=0755,file_mode=0755"
+        fstype: cifs
+        state: mounted 

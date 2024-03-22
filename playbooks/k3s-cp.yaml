@@ -1,6 +1,6 @@
 ### Ubuntu Servers
-- name: Common Server Configuration
-  hosts: pve
+- name: K3s CP
+  hosts: k3s-cp
   become: true
   tasks:
     - name: Install aptitude
